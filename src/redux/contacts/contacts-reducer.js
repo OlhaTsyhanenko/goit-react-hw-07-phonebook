@@ -1,45 +1,32 @@
 import { combineReducers } from 'redux';
 import { createReducer } from "@reduxjs/toolkit";
-// import types from './contacts-types';
 import actions from "./contacts-actions";
+import operations from "./contacts-operations";
 
 const items = createReducer([], {
-    [actions.addContact]: (state, { payload }) => [...state, payload],
-    [actions.deleteContact]: (state, {payload}) => state.filter(contact => contact.id !== payload),
+    [operations.fetchContact.fulfilled]: (_, { payload }) => payload,
+    [operations.addContact.fulfilled]: (state, { payload }) => [...state, payload],
+    [operations.deleteContact.fulfilled]: (state, { payload }) => state.filter(contact => contact.id !== payload),
+})
+
+const loading = createReducer(false, {
+    [operations.fetchContact.pending]: () => true,
+    [operations.fetchContact.fulfilled]: () => false,
+    [operations.fetchContact.rejected]: () => false,
+    [operations.addContact.pending]: () => true,
+    [operations.addContact.fulfilled]: () => false,
+    [operations.addContact.rejected]: () => false,
+    [operations.deleteContact.pending]: () => true,
+    [operations.deleteContact.fulfilled]: () => false,
+    [operations.deleteContact.rejected]: () => false,
 })
 
 const filter = createReducer('', {
     [actions.changeFilter]: (_, {payload}) => payload,
 })
 
-
-// const items = (state = [], { type, payload }) => {
-//     switch (type) {
-//         case types.ADD:
-//                 if (state.find(contact => contact.name.toLowerCase() === payload.name.toLowerCase())) {
-//       alert(`${payload.name} is already in contacts`);
-//       return state;
-//     }
-//             return [...state, payload];
-//         case types.DELETE:
-//             console.log(state);
-//             console.log(payload);
-//             return state.filter(contact => contact.id !== payload);
-//         default:
-//            return state; 
-//     }
-// }
-
-// const filter = (state = '', { type, payload }) => {
-//     switch (type) {
-//         case types.FILTER:
-//             return payload;
-//         default:
-//            return state; 
-//     }
-// }
-
 export default combineReducers({
     items,
     filter,
+    loading,
 }) 

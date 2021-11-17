@@ -1,5 +1,7 @@
+
 export const getItems = state => state.contacts.items;
 export const getValue = state => state.contacts.filter;
+export const getLoading = state => state.contacts.loading;
 
 export const getVisibleContacts = state => {
     const allContacts = getItems(state);
