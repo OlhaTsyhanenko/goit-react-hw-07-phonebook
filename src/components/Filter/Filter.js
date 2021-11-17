@@ -1,5 +1,5 @@
 // import PropTypes from "prop-types";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import actions from "../../redux/contacts/contacts-actions";
 import { getValue } from "../../redux/contacts/contacts-selectors";
 import styles from "./filter.module.css";
